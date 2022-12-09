@@ -175,7 +175,7 @@ export const postEdit = async (req, res) => {
       { new: true }
     );
     req.session.user = updateUser;
-    return res.redirect("/users/edit");
+    return res.redirect("/");
   } else if (alreadyUser.username !== username && alreadyUser.email === email) {
     const updateUser = await User.findByIdAndUpdate(
       _id,
