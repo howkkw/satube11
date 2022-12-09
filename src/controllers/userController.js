@@ -155,7 +155,7 @@ export const postEdit = async (req, res) => {
     body: { name, email, username, location },
     file,
   } = req;
-
+  const isHeroku = process.env.NODE_ENV === "production";
   const alreadyUser = await User.findById({ _id });
   if (alreadyUser.username === username && alreadyUser.email === email) {
     return res.status(400).render("edit-profile", {
@@ -166,7 +166,7 @@ export const postEdit = async (req, res) => {
     const updateUser = await User.findByIdAndUpdate(
       _id,
       {
-        avatarUrl: file ? `/${file.location}` : avatarUrl,
+        avatarUrl: file ? (isHeroku ? file.location : file.path) : avatarUrl,
         name,
         email,
         username,
