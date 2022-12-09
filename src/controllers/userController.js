@@ -166,7 +166,7 @@ export const postEdit = async (req, res) => {
     const updateUser = await User.findByIdAndUpdate(
       _id,
       {
-        avatarUrl: file ? file.location : avatarUrl,
+        avatarUrl: file ? `/${file.location}` : avatarUrl,
         name,
         email,
         username,
@@ -175,7 +175,7 @@ export const postEdit = async (req, res) => {
       { new: true }
     );
     req.session.user = updateUser;
-    return res.redirect("/");
+    return res.redirect("/users/edit");
   } else if (alreadyUser.username !== username && alreadyUser.email === email) {
     const updateUser = await User.findByIdAndUpdate(
       _id,
